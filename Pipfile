@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pywemo = "*"
 flask = "*"
+schedule = "*"
+flask-apscheduler = "*"
 
 [dev-packages]
 
