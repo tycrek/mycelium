@@ -26,7 +26,7 @@ def toggle():
 def netcheck():
 	try:
 		host = socket.gethostbyname('one.one.one.one')
-		sock = socket.create_connection((host, 80), 2)
+		sock = socket.create_connection((host, 80), 10)
 		sock.close()
 	except:
 		pass
@@ -35,5 +35,5 @@ def netcheck():
 		time.sleep(10)
 		toggle()
 
-scheduler.add_job(id = 'wemo', func = netcheck, trigger = 'interval', seconds = 5)
+scheduler.add_job(id = 'wemo', func = netcheck, trigger = 'interval', seconds = 30)
 app.run(host = '0.0.0.0')
