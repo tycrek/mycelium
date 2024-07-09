@@ -32,9 +32,12 @@ def netcheck():
 	except:
 		pass
 		print('network probably down')
+		# turn off modem for 15 seconds
 		toggle()
 		time.sleep(15)
+		# turn on modem and pause for 5 minutes to allow bootup
 		toggle()
+		time.sleep(60 * 5)
 
 scheduler.add_job(id = 'netcheck', func = netcheck, trigger = 'interval', seconds = 30)
 app.run(host = '0.0.0.0')
