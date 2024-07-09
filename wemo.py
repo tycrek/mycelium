@@ -36,5 +36,5 @@ def netcheck():
 		time.sleep(10)
 		toggle()
 
-scheduler.add_job(id = 'wemo', func = netcheck, trigger = 'interval', seconds = 30)
+scheduler.add_job(id = 'netcheck', func = netcheck, trigger = 'interval', seconds = 30)
 app.run(host = '0.0.0.0')
