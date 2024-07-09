@@ -33,7 +33,7 @@ def netcheck():
 		pass
 		print('network probably down')
 		toggle()
-		time.sleep(10)
+		time.sleep(15)
 		toggle()
 
 scheduler.add_job(id = 'netcheck', func = netcheck, trigger = 'interval', seconds = 30)
