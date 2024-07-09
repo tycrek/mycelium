@@ -27,7 +27,7 @@ def toggle():
 def netcheck():
 	try:
 		host = socket.gethostbyname('one.one.one.one')
-		sock = socket.create_connection((host, 80), 10)
+		sock = socket.create_connection((host, 80), 15)
 		sock.close()
 	except:
 		pass
