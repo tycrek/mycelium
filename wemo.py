@@ -15,6 +15,7 @@ app = Flask(__name__)
 scheduler = APScheduler()
 scheduler.init_app(app)
 scheduler.start()
+job = None
 
 # wemo device
 wemo_url = pywemo.setup_url_for_address(open('wemo_ip', 'r').readlines()[0].strip())
@@ -39,6 +40,8 @@ def checkHost(hostname):
 		return False
 
 def netcheck():
+	global job
+
 	print(f'// {datetime.now()}')
 
 	# list of hosts to check
@@ -54,6 +57,7 @@ def netcheck():
 
 	if failed >= THRESHOLD:
 		print('!! network possibly down :c')
+		job.pause()
 
 		# turn off modem for 15 seconds
 		toggle()
@@ -62,9 +66,10 @@ def netcheck():
 		# turn on modem and pause for 5 minutes to allow bootup
 		toggle()
 		time.sleep(60 * 5)
+		job.resume()
 	else:
 		print('// all good :3')
 	print('')
 
-scheduler.add_job(id = 'netcheck', func = netcheck, trigger = 'interval', seconds = 30)
+job = scheduler.add_job(id = 'netcheck', func = netcheck, trigger = 'interval', seconds = 30)
 app.run(host = '0.0.0.0')
