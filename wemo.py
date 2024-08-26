@@ -4,6 +4,7 @@ import pywemo
 import schedule
 import socket
 import time
+import os
 from datetime import datetime
 from flask import Flask
 from flask_apscheduler import APScheduler
@@ -18,7 +19,7 @@ scheduler.start()
 job = None
 
 # wemo device
-wemo_url = pywemo.setup_url_for_address(open('wemo_ip', 'r').readlines()[0].strip())
+wemo_url = pywemo.setup_url_for_address(os.environ['WEMO_IP'])
 wemo_device = pywemo.discovery.device_from_description(wemo_url)
 
 @app.route('/toggle')
@@ -71,5 +72,6 @@ def netcheck():
 		print('// all good :3')
 	print('')
 
+print(f"Wemo IP: {os.environ['WEMO_IP']}")
 job = scheduler.add_job(id = 'netcheck', func = netcheck, trigger = 'interval', seconds = 30)
 app.run(host = '0.0.0.0')

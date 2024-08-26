@@ -5,6 +5,8 @@ services:
     ports:
       - "5000:5000"
     tty: true
+    environment:
+      - WEMO_IP=10.0.200.119
     deploy:
       resources:
         limits:
